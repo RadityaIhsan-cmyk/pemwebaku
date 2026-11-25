@@ -208,14 +208,9 @@
     white-space: nowrap;
 }
 
-.alat-kiri svg {
+.alat-kiri img {
     width: 22px;
     height: 22px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
 }
 
 .kontrol [aria-pressed="true"] {
