@@ -74,13 +74,14 @@ const timerFoto = document.getElementById('timer');
 const hitung = document.getElementById('hitung');
 const cermin = document.getElementById('cermin');
 const kilat = document.getElementById('kilat');
-const stiker = document.getElementById('stiker');
 const bukaHasil = document.getElementById('buka-hasil');
 bukaHasil.onclick = () => { location.hash = '#tinjau'; };
-stiker.onclick = () => {
-  const aktif = balikPilihan(stiker);
-  stiker.querySelector('span').textContent = aktif ? 'Stiker: ON' : 'Stiker: OFF';
-  gambarHasil();
+const durasiTimer = [0, 3, 5, 10];
+timerFoto.onclick = () => {
+  const indeks = durasiTimer.indexOf(Number(timerFoto.value));
+  const detik = durasiTimer[(indeks + 1) % durasiTimer.length];
+  timerFoto.value = String(detik);
+  timerFoto.querySelector('span').textContent = detik ? 'Timer: ' + detik + 's' : 'Timer: Mati';
 };
 const area = document.querySelector('.area-kamera');
 const daftarFilter = [
@@ -168,13 +169,6 @@ function gambarHasil() {
 
   // PNG berada di atas foto agar hiasan frame tetap terlihat.
   kuas.drawImage(bingkai, 0, 0, hasil.width, hasil.height);
-  if (stiker.getAttribute('aria-pressed') === 'true') {
-    kuas.font = 'bold 64px sans-serif';
-    kuas.fillStyle = '#e94f95';
-    for (const [x, y] of daftarFrame[nomorFrame].slot) {
-      kuas.fillText('✦', x + 8, y + 62);
-    }
-  }
 }
 
 function perbaruiStudio() {
@@ -186,7 +180,7 @@ function perbaruiStudio() {
   kamera.hidden = !aktif;
   nyalakan.hidden = aktif || selesai;
   jepret.disabled = !aktif || selesai || hitungAktif !== null;
-  for (const kontrol of [timerFoto, filterFoto, cermin, kilat, stiker]) {
+  for (const kontrol of [timerFoto, filterFoto, cermin, kilat]) {
     kontrol.disabled = hitungAktif !== null;
   }
   document.getElementById('pose').textContent = 'Pose ' + Math.min(foto.length + 1, 3) + ' / 3';
