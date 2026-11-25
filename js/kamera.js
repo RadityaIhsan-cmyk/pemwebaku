@@ -159,7 +159,7 @@ async function mulaiSesi() {
     }
   }
   matikanKamera();
-  location.hash = '#tinjau';
+  perbaruiStudio();
 }
 
 function matikanKamera() {
@@ -181,7 +181,7 @@ function perbaruiStudio() {
   id('jepret').disabled = !aktif || sibuk;
   id('ulang').disabled = !aktif && !foto.length;
   id('unduh').disabled = !selesai || !bingkai.complete || !bingkai.naturalWidth;
-  id('lihat-hasil').hidden = id('unduh').disabled;
+  id('lihat-hasil').disabled = sibuk || id('unduh').disabled;
   for (const nama of ['filter', 'timer', 'cermin']) id(nama).disabled = sibuk;
   gambarStrip();
 }
@@ -208,6 +208,7 @@ id('ulang').onclick = () => {
   perbaruiStudio();
   location.hash = '#studio';
 };
+id('lihat-hasil').onclick = () => { location.hash = '#tinjau'; };
 id('unduh').onclick = () => {
   const tautan = document.createElement('a');
   tautan.download = 'cekrek-' + frame.nama + '.png';
