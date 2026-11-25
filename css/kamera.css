@@ -106,6 +106,8 @@
     inset: 0;
     background: white;
     pointer-events: none;
+    opacity: .55;
+    z-index: 3;
 }
 
 #nyalakan {

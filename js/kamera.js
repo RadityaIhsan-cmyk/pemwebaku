@@ -107,29 +107,43 @@ cermin.onclick = () => { kamera.style.transform = balikPilihan(cermin) ? 'scaleX
 kilat.onclick = () => balikPilihan(kilat);
 
 function batalHitung() {
-  clearInterval(hitungAktif);
+  clearTimeout(hitungAktif);
+  area.classList.remove('flash');
   hitungAktif = null;
   hitung.textContent = '';
 }
 
 function mulaiHitung() {
   if (jepret.disabled || kamera.readyState < 2) return;
-  let sisa = Number(timerFoto.value);
-  if (sisa === 0) {
-    ambilFoto();
-    return;
-  }
-  hitung.textContent = sisa;
-  hitungAktif = setInterval(() => {
-    sisa -= 1;
-    if (sisa > 0) {
-      hitung.textContent = sisa;
-      return;
-    }
+  jadwalkanPose(Number(timerFoto.value));
+}
+
+function jadwalkanPose(sisa) {
+  if (location.hash !== '#studio' || !kamera.srcObject || kamera.readyState < 2) {
     batalHitung();
     perbaruiStudio();
-    if (location.hash === '#studio') ambilFoto();
-  }, 1000);
+    return;
+  }
+
+  hitung.textContent = sisa || '';
+  if (sisa > 0) {
+    hitungAktif = setTimeout(() => jadwalkanPose(sisa - 1), 1000);
+  } else {
+    ambilFoto();
+    if (kilat.getAttribute('aria-pressed') === 'true') area.classList.add('flash');
+    hitungAktif = setTimeout(() => {
+      area.classList.remove('flash');
+      if (foto.length === 3) {
+        matikanKamera();
+        perbaruiStudio();
+        if (location.hash === '#studio') location.hash = '#tinjau';
+      } else if (Number(timerFoto.value) === 0) {
+        hitungAktif = setTimeout(() => jadwalkanPose(0), 1380);
+      } else {
+        jadwalkanPose(Number(timerFoto.value));
+      }
+    }, 120);
+  }
   perbaruiStudio();
 }
 
@@ -188,7 +202,8 @@ function perbaruiStudio() {
 
   let petunjuk = 'Nyalakan kamera untuk mulai foto.';
   if (selesai) petunjuk = 'Foto selesai. Pilih Unduh atau Ulang.';
-  else if (aktif) petunjuk = 'Ambil foto ' + (foto.length + 1) + ' dari 3.';
+  else if (hitungAktif !== null) petunjuk = 'Siap untuk pose ' + (foto.length + 1) + ' dari 3.';
+  else if (aktif) petunjuk = 'Tekan jepret sekali untuk memulai sesi otomatis.';
 
   pesan.textContent = petunjuk;
   gambarHasil();
@@ -224,7 +239,6 @@ async function nyalakanKamera() {
 }
 
 function ambilFoto() {
-  if (jepret.disabled || kamera.readyState < 2) return;
 
   // Simpan bagian yang terlihat di kamera, termasuk arah cerminnya.
   const rasio = kamera.clientWidth / kamera.clientHeight;
@@ -244,14 +258,7 @@ function ambilFoto() {
   if (!filterBawaan && filterFoto.value !== 'none') {
     filterPiksel(kuas, gambar.width, gambar.height, filterFoto.value);
   }
-  if (kilat.getAttribute('aria-pressed') === 'true') {
-    area.classList.add('flash');
-    setTimeout(() => area.classList.remove('flash'), 110);
-  }
   foto.push(gambar);
-  if (foto.length === 3) matikanKamera();
-  perbaruiStudio();
-  if (foto.length === 3) location.hash = '#tinjau';
 }
 
 // Cadangan untuk browser yang belum mendukung filter pada canvas.
