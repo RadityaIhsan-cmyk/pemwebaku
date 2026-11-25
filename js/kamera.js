@@ -174,7 +174,6 @@ function perbaruiStudio() {
   const aktif = Boolean(video.srcObject);
   const selesai = foto.length === 3;
   video.hidden = !aktif;
-  id('status-live').textContent = aktif ? 'LIVE' : 'STANDBY';
   id('pose').hidden = !aktif;
   id('pose').textContent = 'Pose ' + Math.min(foto.length + 1, 3) + ' / 3';
   id('nyalakan').hidden = aktif || selesai;

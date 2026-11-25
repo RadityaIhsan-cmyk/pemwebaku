@@ -95,22 +95,6 @@
     transform: scaleX(-1);
 }
 
-#status-live,
-#pose {
-    position: absolute;
-    z-index: 1;
-    top: 23px;
-    padding: 6px 12px;
-    border-radius: 22px;
-    color: white;
-    font-weight: bold;
-}
-
-#status-live {
-    left: 23px;
-    background: #0009;
-}
-
 #pose {
     right: 23px;
     background: #a93865;
@@ -135,27 +119,6 @@
     pointer-events: none;
     opacity: .55;
     z-index: 3;
-}
-
-.sudut-lensa {
-    position: absolute;
-    z-index: 1;
-    inset: 15px;
-    pointer-events: none;
-    --garis: linear-gradient(white, white);
-
-    background:
-        var(--garis) left top,
-        var(--garis) right top,
-        var(--garis) left bottom,
-        var(--garis) right bottom,
-        var(--garis) left top,
-        var(--garis) right top,
-        var(--garis) left bottom,
-        var(--garis) right bottom;
-    background-size: 23px 3px, 23px 3px, 23px 3px, 23px 3px,
-                     3px 23px, 3px 23px, 3px 23px, 3px 23px;
-    background-repeat: no-repeat;
 }
 
 #nyalakan {
@@ -232,7 +195,6 @@
     border-radius: 50%;
     box-shadow: 0 0 0 2px #d04a80;
     justify-self: center;
-    outline: 2px dashed white;
     outline-offset: -12px;
 }
 
