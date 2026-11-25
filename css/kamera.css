@@ -1,11 +1,7 @@
 #studio {
     padding: 26px clamp(14px, 4vw, 64px) 48px;
     color: #48283a;
-    background: repeating-linear-gradient(
-        90deg,
-        var(--color-cream, #faf8ec) 0 28px,
-        #f3efd9 28px 56px
-    );
+    background: #fff;
     font-family: Jakarta, sans-serif;
 }
 
