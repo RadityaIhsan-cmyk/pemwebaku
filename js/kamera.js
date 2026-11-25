@@ -78,11 +78,25 @@ const stiker = document.getElementById('stiker');
 const bukaHasil = document.getElementById('buka-hasil');
 bukaHasil.onclick = () => { location.hash = '#tinjau'; };
 stiker.onclick = () => {
-  balikPilihan(stiker);
+  const aktif = balikPilihan(stiker);
+  stiker.querySelector('span').textContent = aktif ? 'Stiker: ON' : 'Stiker: OFF';
   gambarHasil();
 };
 const area = document.querySelector('.area-kamera');
-filterFoto.onchange = () => { kamera.style.filter = filterFoto.value; };
+const daftarFilter = [
+  ['Normal', 'none'],
+  ['Monokrom', 'grayscale(1)'],
+  ['Sepia', 'sepia(1)'],
+  ['Kontras', 'contrast(1.3)']
+];
+let indeksFilter = 0;
+filterFoto.onclick = () => {
+  indeksFilter = (indeksFilter + 1) % daftarFilter.length;
+  const [nama, efek] = daftarFilter[indeksFilter];
+  filterFoto.value = efek;
+  filterFoto.querySelector('span').textContent = nama;
+  kamera.style.filter = efek;
+};
 function balikPilihan(tombol) {
   const aktif = tombol.getAttribute('aria-pressed') !== 'true';
   tombol.setAttribute('aria-pressed', String(aktif));

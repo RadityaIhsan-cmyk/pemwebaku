@@ -306,16 +306,38 @@
     text-align: center;
 }
 
-.alat-kiri > button,
-.alat-kiri > label {
+.alat-kiri {
     display: grid;
-    align-content: center;
-    min-height: 58px;
+    grid-template-columns: 1fr 1.18fr 1fr;
+    width: min(100%, 248px);
+    gap: 8px;
+}
+
+.alat-kiri > button {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 7px;
+    min-width: 0;
+    min-height: 66px;
+    padding: 5px 2px;
+    border: 2px solid #fb71a4;
+    border-radius: 20px;
     background: white;
-    padding: 6px;
-    border: 2px solid #f69abe;
-    border-radius: 16px;
-    box-shadow: 0 3px #f69abe;
+    color: #783c53;
+    box-shadow: 0 4px #fb71a4;
+    font: 800 12px Jakarta, sans-serif;
+    white-space: nowrap;
+}
+
+.alat-kiri svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .kontrol select {
@@ -471,20 +493,6 @@
     min-width: 0;
 }
 
-.alat-kiri button::before {
-    display: block;
-    font-size: 20px;
-}
-
-#stiker::before {
-    content: '✧';
-}
-
-#buka-hasil::before {
-    content: '▧';
-}
-
-
 /* ========================================
    RESPONSIVE DESIGN
 ======================================== */
@@ -514,4 +522,8 @@
     .kontrol {
         grid-template-columns: minmax(0, 1fr);
     }
+}
+@media (max-width: 1250px) {
+    .kontrol { grid-template-columns: 1fr; justify-items: center; }
+    #jepret { grid-row: 1; grid-column: 1; }
 }
