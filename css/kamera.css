@@ -436,7 +436,7 @@
 }
 
 #hasil {
-    height: clamp(190px, 19vw, 260px);
+    height: clamp(275px, 29vw, 420px);
 }
 
 .pilihan-frame button {
