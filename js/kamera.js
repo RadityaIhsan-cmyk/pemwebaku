@@ -198,7 +198,6 @@ function perbaruiStudio() {
   let petunjuk = '';
   if (selesai) petunjuk = 'Foto selesai. Pilih Unduh atau Ulang.';
   else if (hitungAktif !== null) petunjuk = 'Siap untuk pose ' + (foto.length + 1) + ' dari 3.';
-  else if (aktif) petunjuk = 'Tekan jepret sekali untuk memulai sesi otomatis.';
 
   pesan.textContent = petunjuk;
   gambarHasil();
