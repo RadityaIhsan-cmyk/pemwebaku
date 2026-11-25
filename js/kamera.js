@@ -73,9 +73,6 @@ const filterFoto = document.getElementById('filter');
 const timerFoto = document.getElementById('timer');
 const hitung = document.getElementById('hitung');
 const cermin = document.getElementById('cermin');
-const kilat = document.getElementById('kilat');
-const bukaHasil = document.getElementById('buka-hasil');
-bukaHasil.onclick = () => { location.hash = '#tinjau'; };
 const durasiTimer = [0, 3, 5, 10];
 timerFoto.onclick = () => {
   const indeks = durasiTimer.indexOf(Number(timerFoto.value));
@@ -104,7 +101,6 @@ function balikPilihan(tombol) {
   return aktif;
 }
 cermin.onclick = () => { kamera.style.transform = balikPilihan(cermin) ? 'scaleX(-1)' : 'none'; };
-kilat.onclick = () => balikPilihan(kilat);
 
 function batalHitung() {
   clearTimeout(hitungAktif);
@@ -130,7 +126,7 @@ function jadwalkanPose(sisa) {
     hitungAktif = setTimeout(() => jadwalkanPose(sisa - 1), 1000);
   } else {
     ambilFoto();
-    if (kilat.getAttribute('aria-pressed') === 'true') area.classList.add('flash');
+    area.classList.add('flash');
     hitungAktif = setTimeout(() => {
       area.classList.remove('flash');
       if (foto.length === 3) {
@@ -162,7 +158,6 @@ function pasangFrame(nomor) {
 function gambarHasil() {
   const siap = bingkai.complete && bingkai.naturalWidth > 0;
   unduh.disabled = foto.length !== 3 || !siap;
-  bukaHasil.disabled = unduh.disabled;
   document.getElementById('lihat-hasil').hidden = unduh.disabled;
   if (!siap) return;
 
@@ -194,13 +189,13 @@ function perbaruiStudio() {
   kamera.hidden = !aktif;
   nyalakan.hidden = aktif || selesai;
   jepret.disabled = !aktif || selesai || hitungAktif !== null;
-  for (const kontrol of [timerFoto, filterFoto, cermin, kilat]) {
+  for (const kontrol of [timerFoto, filterFoto, cermin]) {
     kontrol.disabled = hitungAktif !== null;
   }
   document.getElementById('pose').textContent = 'Pose ' + Math.min(foto.length + 1, 3) + ' / 3';
   ulang.disabled = !aktif && foto.length === 0;
 
-  let petunjuk = 'Nyalakan kamera untuk mulai foto.';
+  let petunjuk = '';
   if (selesai) petunjuk = 'Foto selesai. Pilih Unduh atau Ulang.';
   else if (hitungAktif !== null) petunjuk = 'Siap untuk pose ' + (foto.length + 1) + ' dari 3.';
   else if (aktif) petunjuk = 'Tekan jepret sekali untuk memulai sesi otomatis.';
