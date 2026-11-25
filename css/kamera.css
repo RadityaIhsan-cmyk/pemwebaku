@@ -407,7 +407,6 @@
 
 .studio-body {
     grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
-    align-items: center;
     gap: clamp(16px, 2vw, 28px);
 }
 
